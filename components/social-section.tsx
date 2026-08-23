@@ -1,9 +1,10 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, type Variants } from "framer-motion"
 import { useRef } from "react"
 import Instagram from '@iconify/icons-lucide/instagram'
 import Image from "next/image"
+import { Heading } from '@/components/ui/heading'
 
 const instagramPosts = [
   { image: "/s1.jpg", likes: "1.4k" },
@@ -14,7 +15,7 @@ const instagramPosts = [
   { image: "/s6.jpg", likes: "2.1k" },
 ]
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -25,7 +26,7 @@ const containerVariants = {
   },
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, scale: 0.8, y: 20 },
   visible: {
     opacity: 1,
@@ -44,24 +45,18 @@ export function SocialSection() {
   const isInView = useInView(ref, { once: true, margin: "-50px" })
 
   return (
-    <section id="creators" className="relative py-16 bg-[#716f6f] overflow-hidden">
+    <>
+     <Heading as="h2" textAlign="text-center">View Our Work</Heading>
+    <section id="creators" className="relative py-5 bg-[#716f6f] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className="text-center mb-10"
+          className="text-center mb-1"
         >
-          <motion.span
-            className="font-mono text-[#AFFF00] text-lg tracking-widest inline-block"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            FOLLOW OUR WORK
-          </motion.span>
+         
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter mt-2 overflow-hidden">
             <motion.span
               className="inline-block"
@@ -131,13 +126,13 @@ export function SocialSection() {
             href="https://instagram.com/srplumbing.np"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#AFFF00] text-[#121212] px-6 py-3 rounded-full font-bold text-sm tracking-wide relative overflow-hidden group"
+            className="flex items-center gap-2 bg-orange-400 text-[#121212] hover:bg-lime px-6 py-3 rounded-full font-bold text-sm tracking-wide relative overflow-hidden group"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+              className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full"
               whileHover={{ x: "200%" }}
               transition={{ duration: 0.6 }}
             />
@@ -147,5 +142,6 @@ export function SocialSection() {
         </motion.div>
       </div>
     </section>
+    </>
   )
 }

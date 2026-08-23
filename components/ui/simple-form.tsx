@@ -91,7 +91,7 @@ export function FormButton({
       type="submit"
       name={name}
       disabled={isLoading}
-      className="w-full py-3 px-4 bg-primary-foreground text-white rounded-lg hover:bg-pineapple disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      className="w-full py-3 px-4 bg-orange-400 text-white rounded-lg hover:bg-lime disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
     >
       {isLoading ? 'Sending...' : label}
     </button>

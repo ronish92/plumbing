@@ -27,10 +27,9 @@ const hours = [
   const currentMinutes = now.getHours() * 60 + now.getMinutes()
 
 
-  const checkIsOpen = (timeRange) => {
+  const checkIsOpen = (timeRange: any) => {
     if (!timeRange) return false
     
-    // Parses string like "9am-6pm" or "10am-2pm"
     const matches = timeRange.toLowerCase().match(/(\d+)(am|pm)-(\d+)(am|pm)/)
     if (!matches) return false
 
@@ -38,7 +37,6 @@ const hours = [
     startHour = parseInt(startHour, 10)
     endHour = parseInt(endHour, 10)
 
-    // Convert to 24h format system
     if (startMed === 'pm' && startHour < 12) startHour += 12
     if (startMed === 'am' && startHour === 12) startHour = 0
     if (endMed === 'pm' && endHour < 12) endHour += 12
@@ -122,10 +120,10 @@ export default function WhyUs() {
              
               className={`py-6 px-10 w-full xl:w-1/3 flex flex-col gap-6 justify-center items-center xl:items-start rounded-md xl:rounded-none hover:bg-body/12 transition-colors duration-300 ${
                 index === 0
-                  ? 'bg-primary-foreground'
+                  ? 'bg-orange-400/80'
                   : index === 1
                     ? 'bg-coconut'
-                    : 'bg-primary-foreground'
+                    : 'bg-orange-400/80'
               }`}
             >
               <div className="w-20 h-20 flex items-center justify-center rounded-full bg-body">

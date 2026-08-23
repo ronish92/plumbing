@@ -117,15 +117,15 @@ export function HeroSection() {
                   initial="hidden"
                   animate="visible"
                   custom={2}
-                  className="inline-block text-[#AFFF00]"
+                  className="inline-block text-orange-400"
                 >
-                  PLUMBING
+                  SERVICES
                 </motion.span>
               </motion.h1>
               <p
                 className="text-lg md:text-xl font-mono text-[#121212]/60 tracking-tight pt-2 max-w-2xl"
               >
-                We are a licensed, insured plumbing comapany offering relaible repairs and installations. Zero stress. Courteous professionals. Clean service that stands apart..
+              We are a licensed, insured home services company offering reliable repairs, installations, and maintenance. Zero stress. Courteous professionals. Clean service that stands apart.
               </p>
             </div>
 
@@ -160,13 +160,14 @@ export function HeroSection() {
             </div> */}
           </div>
 
-          <div className="relative flex justify-center">
+          <div className="relative flex justify-right ml-5"
+           style={{ maskImage: 'radial-gradient(circle, black 60%, transparent 100%)', WebkitMaskImage: 'radial-gradient(circle, black 60%, transparent 100%)' }}>
 
               <Image
-                src="/images/mainn.png"
+                src="/images/home.jpeg"
                 alt="SR Plumbing Services"
-                width={650}
-                height={625}
+                width={600}
+                height={500}
                 className="relative z-10 drop-shadow-2xl"
                 priority
               />

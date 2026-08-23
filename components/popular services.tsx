@@ -4,69 +4,10 @@ import { useRef } from 'react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Section } from '@/components/ui/section'
+import { services, type Service } from '@/data/service';
 
-const popular = [
-  {
-    title: 'Leak Detection & Repair',
-    provider: 'FlowFix Certified Team',
-    rating: 4.9,
-    reviews: 320,
-    price: 'From $89.00',
-    description:
-      'Advanced leak detection technology to find and fix leaks quickly, minimizing water damage and saving you money on utility bills.',
-    image: 'https://images.pexels.com/photos/8105045/pexels-photo-8105045.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-  {
-    title: 'Pipe Installation & Repair',
-    provider: 'FlowFix Certified Team',
-    rating: 4.8,
-    reviews: 210,
-    price: 'From $150.00',
-    description:
-      'Professional pipe fitting and installation for new construction and remodeling projects using premium materials and code-compliant methods.',
-    image: 'https://images.pexels.com/photos/4219592/pexels-photo-4219592.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-  {
-    title: 'Water Heater Services',
-    provider: 'FlowFix Certified Team',
-    rating: 4.9,
-    reviews: 185,
-    price: 'From $210.00',
-    description:
-      'Installation, repair, and maintenance of all water heater types including tankless, traditional, and hybrid systems.',
-    image: 'https://images.pexels.com/photos/8099147/pexels-photo-8099147.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-  {
-    title: 'Bathroom Remodeling',
-    provider: 'FlowFix Certified Team',
-    rating: 5.0,
-    reviews: 142,
-    price: 'From $1,200.00',
-    description:
-      'Complete bathroom plumbing for remodels — from fixture installation to shower systems, we handle every detail with precision.',
-    image: 'https://images.pexels.com/photos/6585962/pexels-photo-6585962.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-  {
-    title: 'Drain Cleaning',
-    provider: 'FlowFix Certified Team',
-    rating: 4.7,
-    reviews: 275,
-    price: 'From $120.00',
-    description:
-      'Thorough drain cleaning using hydro-jetting and snaking techniques to clear stubborn clogs and keep your pipes flowing freely.',
-    image: 'https://images.pexels.com/photos/4218860/pexels-photo-4218860.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-  {
-    title: 'Emergency Plumbing',
-    provider: 'FlowFix Certified Team',
-    rating: 4.9,
-    reviews: 410,
-    price: '24/7 Service',
-    description:
-      '24/7 emergency plumbing services with rapid response. Burst pipes, sewage backups, and major leaks handled immediately.',
-    image: 'https://images.pexels.com/photos/8105045/pexels-photo-8105045.jpeg?auto=compress&cs=tinysrgb&w=600',
-  },
-];
+import { useRouter } from 'next/navigation'; 
+
 
 export default function PopularServices() {
   const heading = useScrollAnimation();
@@ -78,6 +19,14 @@ export default function PopularServices() {
     const amount = Math.min(el.clientWidth * 0.75, 360);
     el.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
   };
+
+ 
+      const router = useRouter();
+
+const handleCardClick = (slug: string) => {
+  router.push(`/services/${slug}`);
+};
+
 
   return (
     <Section className="relative mt-10 mb-45 bg-white section-padding overflow-hidden">
@@ -112,8 +61,12 @@ export default function PopularServices() {
           ref={scrollRef}
           className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth -mx-4 px-4 md:mx-0 md:px-0 [scrollbar-none] [&::-webkit-scrollbar]:hidden"
         >
-          {popular.map((service, i) => (
-            <PopularCard key={service.title} service={service} index={i} />
+          {services.map((service, i) => (
+            <PopularCard
+             key={service.title} 
+             service={service}
+              index={i} 
+              onClick={() =>handleCardClick(service.slug)} />
           ))}
         </div>
          <button
@@ -132,26 +85,31 @@ export default function PopularServices() {
           Swipe to browse
           <ChevronRight className="w-4 h-4" />
         </div>
+
     
     </Section>
   );
 }
 
+
+
 function PopularCard({
   service,
   index,
+  onClick
 }: {
-  service: (typeof popular)[0];
+  service: Service;
   index: number;
+  onClick: () => void;
 }) {
   const card = useScrollAnimation(0.1);
 
   return (
     <a
-      href="#contact"
+
       onClick={(e) => {
         e.preventDefault();
-        document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+        onClick();
       }}
       ref={card.ref as any}
       className={`group shrink-0 w-65 md:w-70 snap-start block ${

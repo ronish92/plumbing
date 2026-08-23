@@ -35,6 +35,7 @@ export default function Pricing() {
         align="items-start"
         cols="grid-cols-1 md:grid-cols-1 lg:grid-cols-3"
         gap="gap-16 lg:gap-16"
+    
       >
         <Column className="relative">
           <Card4>
@@ -48,8 +49,8 @@ export default function Pricing() {
               className="flex items-baseline"
               margin="mb-4"
             >
-              <span className="text-5xl text-white font-bold">$29</span>
-              <span className="text-xl text-white text-body1/60 ml-2">/mo</span>
+              <span className="text-5xl text-orange-500 font-bold">Rs. 2500</span>
+              <span className="text-xl text-orange-400 text-body1/60 ml-2">/mo</span>
             </Heading>
             <Paragraph>Perfect for small teams</Paragraph>
 
@@ -68,7 +69,7 @@ export default function Pricing() {
          
 
             <Button 
-             className="w-full mt-auto" >
+             className="w-full mt-auto  bg-orange-400 text-white hover:bg-lime" >
               Select Plan
             </Button>
           </Card4>
@@ -86,8 +87,8 @@ export default function Pricing() {
               className="flex items-baseline"
               margin="mb-4"
             >
-              <span className="text-5xl font-bold">$99</span>
-              <span className="text-xl text-body1/60 ml-2">/mo</span>
+              <span className="text-5xl text-orange-500 font-bold">Rs. 5000</span>
+              <span className="text-xl text-orange-400 text-body1/60 ml-2">/mo</span>
             </Heading>
             <Paragraph>For growing businesses</Paragraph>
 
@@ -106,7 +107,7 @@ export default function Pricing() {
 
             <Button
            //   href="#contact"
-              className="w-full mt-auto"
+              className="w-full  bg-orange-400 text-white hover:bg-lime mt-auto"
             >
               Select Plan
             </Button>
@@ -125,8 +126,8 @@ export default function Pricing() {
               className="flex items-baseline"
               margin="mb-4"
             >
-              <span className="text-5xl font-bold">$299</span>
-              <span className="text-xl text-body1/60 ml-2">/mo</span>
+              <span className="text-5xl text-orange-500 font-bold">Rs. 7500</span>
+              <span className="text-xl text-body1/60 text-orange-400 ml-2">/mo</span>
             </Heading>
             <Paragraph>For large organizations</Paragraph>
 
@@ -145,7 +146,7 @@ export default function Pricing() {
 
             <Button
           //    href="#contact"
-              className="w-full mt-auto"
+              className="w-full bg-orange-400 text-white hover:bg-lime mt-auto"
             >
               Select Plan
             </Button>

@@ -14,42 +14,50 @@ export interface CardLinkData {
   size?: 'small' | 'medium' | 'large' | 'full'
 }
 
-interface Card1Props {
+interface Card2Props {
   id?: string
   title: string
   image: string
-  href: string
+  href?: string
   alt: string
   width?: number
   height?: number
   size?: 'small' | 'medium' | 'large' | 'full'
   external?: boolean
+  onClick: () => void
 }
 
-export function Card1({
+export function Card2({
   id,
   title,
   image,
-  href,
   alt,
   width,
   height,
   size = 'large',
   external = false,
-}: Card1Props) {
+  onClick
+}: Card2Props) {
   return (
-    <Link
+    <div
       key={id}
-      href={href}
+      onClick={onClick}
+      role='button'
+      tabIndex={0}
       className="group relative focus:outline-none"
       aria-label={`Navigate to ${title}`}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
-      prefetch={true}
-      scroll={true}
+        onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onClick?.()
+        }
+      }}
+   
+     
+  
     >
 
-      <div className="relative h-80 rounded-lg shadow-lg">
+      <div className="relative h-60 rounded-lg shadow-lg">
      
         <Image
           src={image}
@@ -60,14 +68,16 @@ export function Card1({
         />
 
    
-        <Heading
-          as="h3"
-          color="text-body2-contrast"
-          className="absolute flex items-center -rotate-90 h-14 right-20 xl:right-24 -top-10 transform origin-top-right bg-[#AFFF00] px-12 whitespace-nowrap shadow-lg  `text-[1.1rem]!` z-10"
-        >
-          {title}
-        </Heading>
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+    <Heading
+      as="h3"
+      color="text-body2-contrast"
+      className="w-full bg-orange-400 px-3 py-2 text-center text-[0.9rem]! font-medium text-black leading-tight"
+    >
+      {title}
+    </Heading>
+  </div>
       </div>
-    </Link>
+    </div>
   )
 }

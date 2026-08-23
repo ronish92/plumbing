@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import Pricing from "@/components/pricing"
+import PromoGrid from "@/components/promo_component"
 
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <Navigation />
      
-      
+      <PromoGrid/>
       <Pricing />
      
       

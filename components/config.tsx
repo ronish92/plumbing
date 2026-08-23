@@ -86,15 +86,16 @@ export const copyrightName = 'SR Plumbing Services'
 export function WebMaster() {
   return (
     <>
-      Built with{' '}
+      Built
+       with{' '}
       <Icon
         icon={heartIcon}
         className="text-red-500"
       />{' '}
       by the team at{' '}
       <a
-        className="underline hover:text-contrast-light"
-        href="https://gallop.software/"
+        className="underline text-orange-500! hover:text-black"
+        href="https://evocodesolutions.com/"
       >
         Evocode Solutions
       </a>

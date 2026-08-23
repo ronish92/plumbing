@@ -88,10 +88,7 @@ export default function BookServiceCard({
                 </div>
 
                 {/* Warning Policy Content Alert Box */}
-                <div className="bg-red-50/60 border border-red-100 rounded-lg p-4 text-xs leading-relaxed text-red-800">
-                    <span className="font-bold block mb-1 text-red-700">* Price Description</span>
-                    Labor Charge: {currency}. {initialPrice} Service Type: Per Point | 30 days service warranty on workmanship. This is a per unit basis charge. If your work includes multiple points, the total cost matches {currency}. {initialPrice} × number of units.
-                </div>
+               
 
                 {/* Coupon Form Input Area */}
                 <div className="flex gap-2 mt-auto pt-4 md:pt-0">

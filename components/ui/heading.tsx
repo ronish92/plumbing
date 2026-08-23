@@ -77,22 +77,22 @@ export function Heading({
           textWrap: '',
           fontFamily: 'font-heading',
           color: 'text-contrast',
-          margin: 'mb-8',
+          margin: 'mb-12',
         }
       case 'h3':
         return {
-          fontSize: 'text-3xl sm:text-4xl',
+          fontSize: 'text-xl sm:text-2xl',
           fontWeight: 'font-semibold',
           letterSpacing: 'tracking-tight',
           lineHeight: 'leading-normal',
           textWrap: '',
           fontFamily: 'font-heading',
           color: 'text-contrast',
-          margin: 'mb-8',
+          margin: 'mb-0',
         }
       case 'h4':
         return {
-          fontSize: 'text-xl md:text-xl',
+          fontSize: 'text-2xl md:text-2xl',
           fontWeight: 'font-bold',
           letterSpacing: 'tracking-normal',
           lineHeight: 'leading-tight',

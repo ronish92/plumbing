@@ -65,7 +65,7 @@ export default function Testimonial() {
             {/* Quote mark */}
             <Icon
               icon={quoteIcon}
-              className="absolute -top-4 -left-2 w-16 h-16  text-lime select-none"
+              className="absolute -top-4 -left-2 w-16 h-16  text-orange-500 select-none"
             />
 
             {/* Content */}

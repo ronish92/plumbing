@@ -26,7 +26,7 @@ function SocialLinks() {
           href={item.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-black hover:text-lime hover:bg-body2/30 rounded-lg transition-colors duration-200 p-2"
+          className="text-orange-500 hover:text-lime hover:bg-body2/30 rounded-lg transition-colors duration-200 p-2"
           aria-label={item.name}
         >
           <Icon
