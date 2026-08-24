@@ -23,7 +23,7 @@ export default function PromoCoupon() {
   };
 
   return (
-    <section className="relative bg-transparent section-padding overflow-hidden">
+    <section className="relative bg-background section-padding overflow-hidden mb-10">
       <div className="relative container-max">
         <div
           ref={section.ref}
@@ -52,8 +52,8 @@ export default function PromoCoupon() {
             }} />
 
             {/* Perforated edges */}
-            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white" />
-            <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white" />
+            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background" />
+            <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background" />
 
             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 p-8 md:p-12 items-center">
               {/* Left - Offer */}

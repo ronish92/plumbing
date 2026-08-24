@@ -11,6 +11,7 @@ import { SidebarPanel} from './renderer'
 
   const SERVICES_DETAILS: Record<string, SidebarData> = {
   "1": {
+    id: 1,
     imageSrc: "/images/hot.jpg",
     imageAlt: "Hot Water Installation details",
     title: "Hot Water",
@@ -22,6 +23,7 @@ import { SidebarPanel} from './renderer'
     ]
   },
   "2": {
+    id:2,
     imageSrc: "/images/leakage.jpg",
     imageAlt: "Fix all your Leakages",
     title: "Water Leakage",

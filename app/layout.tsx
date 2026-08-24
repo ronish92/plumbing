@@ -20,10 +20,10 @@ const _jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Plumbify | Dream Big, Drink GiGi",
+  title: "Smart House Solutions | Dream Big, Full Solutions",
   description: "Home Experts at your door.",
-  keywords: ["plumbing", "expert", "solutions", "reliable", "leaks"],
-    generator: 'v0.app'
+  keywords: ["plumbing", "expert", "solutions", "reliable", "leaks", "construction", "painting", "electricity", "lighting" ],
+    generator: 'evocode.projects'
 }
 
 export const viewport: Viewport = {

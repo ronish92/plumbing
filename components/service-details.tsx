@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Form from 'next/form';
 import { Navigation } from "@/components/navigation"
 import {
@@ -9,14 +9,15 @@ import {
   type DualDate,
 } from "react-bs-ad-datepicker";
 
-
+import ReCAPTCHA from 'react-google-recaptcha';
+import { verifyCaptcha } from '@/app/captcha/actions';
 import "react-bs-ad-datepicker/dist/calendar.css";
-import { Icon } from './ui/icon';
+
 import Image from 'next/image';
 import { Star, MapPin, Clock, Shield, CheckCircle, Phone, Mail, CalendarX2Icon, Users, Wrench, Award } from 'lucide-react';
-import BookServiceCard from './book_service_card';
+
 import type { Service } from "@/data/service";
-import SearchBar from './search';
+
 
 
 
@@ -57,9 +58,11 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
   const [selectedDate, setSelectedDate] = useState<DualDate | null>(today);
   const [promoCode, setPromoCode] = useState<string>('');
   const [isPromoApplied, setIsPromoApplied] = useState<boolean>(false);
-
+  const [status, setStatus] = useState<string>('');
+  const captchaRef = useRef<ReCAPTCHA>(null);
   const [calendarType, setCalendarType] = useState<"AD" | "BS">("BS");
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
 
 
 
@@ -81,25 +84,70 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
     '5PM -8PM'
   ];
 
-  const handleBookNow = () => {
-    if (!selectedDate) {
-      alert("Please select a booking date.");
+  const handlePromoApply = () => {
+    const trimmedCode = promoCode.trim();
+
+    if (!trimmedCode) {
+      setStatus('Enter a promo code first.');
       return;
     }
 
-    // onBookingSubmit?.({
-    //     date: formatAdDate(selectedDate),
-    //     time: selectedTime,
-    //     promoCode,
-    // });
+    setIsPromoApplied(true);
+    setStatus('Promo code applied.');
   };
+
+  async function handleBookNow() {
+    if (!selectedDate) {
+      setStatus('Please select a booking date.');
+      return;
+    }
+
+    const token = captchaRef.current?.getValue();
+
+    if (!token) {
+      setStatus('Please complete the CAPTCHA.');
+      return;
+    }
+
+    try {
+
+      setIsBooking(true);
+      setStatus('');
+      const result = await verifyCaptcha(token);
+
+      if (!result.success) {
+        setStatus('CAPTCHA verification failed. Try again.');
+        captchaRef.current?.reset();
+        return;
+      }
+
+      // Booking data ready for your API
+      const bookingData = {
+        serviceId: service.id,
+        serviceTitle: service.title,
+        date: formatAdDate(selectedDate),
+        time: selectedTime,
+        promoCode: isPromoApplied ? promoCode : '',
+      };
+
+      console.log('Booking data:', bookingData);
+
+      setStatus('Form submitted successfully!');
+      captchaRef.current?.reset();
+    } catch (error) {
+      console.error('Booking failed:', error);
+      setStatus('Something went wrong. Please try again.');
+    } finally {
+      setIsBooking(false);
+    }
+  }
 
   return (
     <>
-    <Navigation />
+      <Navigation />
       <main className="min-h-screen bg-linear-to-br mt-30 from-gray-50 via-white to-gray-100">
         {/* Hero Section */}
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
 
             <div className="grid grid-cols-1 md:grid-cols-2">
@@ -188,7 +236,7 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-6xl mx-auto px-4 py-12 -mt-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 py-12 -mt-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Details */}
             <div className="lg:col-span-2 space-y-8">
@@ -288,13 +336,7 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
                         <p className="text-xs text-gray-600">{bookingInfo.availability}</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
-
-                      <div>
-                        <p className="text-sm font-medium">Cancellation Policy</p>
-                        <p className="text-xs text-gray-600">{bookingInfo.cancellation}</p>
-                      </div>
-                    </div>
+                   
                     <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
 
                       <div className="flex-[1.3] flex flex-col gap-5 md:border-l md:border-gray-200 md:pl-6">
@@ -414,19 +456,6 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
 
                         </div>
 
-
-                        {/* <div className="text-sm bold text-gray-600">
-                          Promo codes if any
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="eg: FREE20"
-                          value={promoCode}
-                          onChange={(e) => setPromoCode(e.target.value)}
-                          disabled={isPromoApplied}
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:bg-gray-100"
-                        /> */}
-
                         <Form
                           action=""
                           className="flex w-66 bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden"
@@ -442,26 +471,39 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
                           />
 
                           <button
-                            type="submit"
-                            onClick={() => setIsPromoApplied(true)}
+                            type="button"
+                            onClick={handlePromoApply}
+                            disabled={!promoCode.trim() || isPromoApplied}
                             aria-label="Submit Search"
                             className="flex items-center justify-center px-6 bg-orange-400 hover:bg-lime text-white transition-colors cursor-pointer group"
                           >
-                            
+
                             <span className="text-xs font-medium tracking-wide">
-    {isPromoApplied ? 'APPLIED' : 'APPLY'}
-  </span>
-                            
+                              {isPromoApplied ? 'APPLIED' : 'APPLY'}
+                            </span>
+
                           </button>
                         </Form>
-                     
+                        <div className="w-full overflow-hidden flex justify-center">
+                          <div className="origin-top scale-[0.9] mb-1">
+                            <ReCAPTCHA
+                              ref={captchaRef}
+                              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                              onChange={() => setStatus('')}
+                            />
+                          </div>
+                        </div>
+
+                         <p className="text-xs text-gray-600">*{bookingInfo.cancellation}</p>
+
                         {/* Final Execution Form Submit CTA Trigger */}
                         <button
                           type="button"
                           onClick={handleBookNow}
+                          disabled={isBooking}
                           className="w-full bg-orange-400 hover:bg-lime text-white font-bold py-3.5 px-4 rounded-lg shadow-sm transition text-center mt-auto cursor-pointer"
                         >
-                          Book Now
+                          {isBooking ? 'Booking...' : 'Book Now'}
                         </button>
                       </div>
                     </div>

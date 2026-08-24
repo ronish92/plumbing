@@ -72,7 +72,7 @@ const contactItems = [
 export default function WhyUs() {
   return (
     <div className="relative bg-contrast z-1 px-6 mt-10 mb-30">
-      <div className="mx-auto max-w-[1600px] relative flex flex-col xl:flex-row gap-6 xl:gap-0">
+      <div className="mx-auto max-w-[1500px] relative flex flex-col xl:flex-row gap-6 xl:gap-0">
         {/* Hours Section */}
         <div className="pt-14 pb-10 px-8 w-full xl:w-4/12 -mt-20 xl:-mb-20 relative rounded-md xl:rounded-b-md xl:rounded-t-md overflow-hidden shadow-lg bg-[#2f0e0a]/10">
           <Heading

@@ -43,7 +43,8 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Logo
           className="mb-7"
-          width={220}
+          width={80}
+          height={50}
         />
 
         <div className="hidden md:flex items-center gap-8">

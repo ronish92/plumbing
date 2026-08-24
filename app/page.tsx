@@ -8,13 +8,17 @@ import Content from "@/components/contact-form"
 
 import FAQ from "@/components/faq"
 import WhyUs from "@/components/timings"
-import Application from "@/components/join-us"
+
 import Testimonial from "@/components/testimonials"
 import PopularServices from "@/components/popular services"
 import TickerBanner from "@/components/ticker_banner"
-// import ElectricityServices from "@/components/electricity-services"
+
 import Category from "@/components/category"
 import PromoCoupon from "@/components/promo_home_display"
+import ElectricityServices from "@/components/electricity-services"
+import PaintingServices from "@/components/painting-services"
+import Process from "@/components/process"
+import ConstructionServices from "@/components/construction-services"
 
 export default function Home() {
   return (
@@ -26,8 +30,11 @@ export default function Home() {
       <PromoCoupon/>
       <Category/>
       <PlumbingServices /> 
-    
+      <ElectricityServices/>
+      <PaintingServices/>
+      <ConstructionServices/>
       <PopularServices />   
+      <Process/>
       < WhyUs />   
        < FAQ />  
       <SocialSection />

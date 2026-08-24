@@ -44,7 +44,7 @@ export function Card2({
       onClick={onClick}
       role='button'
       tabIndex={0}
-      className="group relative focus:outline-none"
+      className="group relative focus:outline-none cursor-pointer"
       aria-label={`Navigate to ${title}`}
         onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {

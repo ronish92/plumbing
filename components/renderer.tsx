@@ -12,6 +12,7 @@ import { List, Li } from '@/components/ui/list'
 
 // Define the exact data shape your sidebar needs to receive
 export interface SidebarData {
+  id: number
   imageSrc: string
   imageAlt: string
   title: string

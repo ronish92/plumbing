@@ -9,8 +9,8 @@ interface LogoProps {
 
 export function Logo({
   className = '',
-  width,
-  height,
+  width =50,
+  height =50,
  // dark = false,
 }: LogoProps) {
   return (
@@ -19,8 +19,8 @@ export function Logo({
       src={'/images/logo.png'}
       size="medium"
       alt="Logo"
-      height={50}
-      width={50}
+      height={height}
+      width={width}
       className={className}
     />
   )
