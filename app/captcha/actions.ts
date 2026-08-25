@@ -1,5 +1,5 @@
 
-'use server';
+// 'use server';
 
 export async function verifyCaptcha(token: string) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;

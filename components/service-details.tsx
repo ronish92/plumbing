@@ -113,13 +113,13 @@ const ServiceBookingPage = ({ service }: ServiceBookingPageProps) => {
 
       setIsBooking(true);
       setStatus('');
-      const result = await verifyCaptcha(token);
+      // const result = await verifyCaptcha(token);
 
-      if (!result.success) {
-        setStatus('CAPTCHA verification failed. Try again.');
-        captchaRef.current?.reset();
-        return;
-      }
+      // if (!result.success) {
+      //   setStatus('CAPTCHA verification failed. Try again.');
+      //   captchaRef.current?.reset();
+      //   return;
+      // }
 
       // Booking data ready for your API
       const bookingData = {
