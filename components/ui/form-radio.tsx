@@ -44,7 +44,7 @@ export function FormRadioGroup({
               defaultChecked={defaultValue === option}
               required={required}
               data-label={label}
-              className="h-5 w-5 shrink-0 appearance-none rounded-full border border-accent2 checked:bg-accent2 checked:border-accent2 focus:outline-none focus:ring-2 focus:ring-accent2 cursor-pointer transition-colors"
+              className="h-5 w-5 shrink-0 appearance-none rounded-full border border-accent2 checked:bg-orange-400 checked:border-accent2 focus:outline-none focus:ring-2 focus:ring-accent2 cursor-pointer transition-colors"
             />
             <span className="font-body font-medium text-contrast">
               {option}

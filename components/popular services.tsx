@@ -4,7 +4,8 @@ import { useRef } from 'react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Section } from '@/components/ui/section'
-import { services, type Service } from '@/data/service';
+import { services } from '@/data/service';
+import { IService } from '@/models/service';
 
 import { useRouter } from 'next/navigation'; 
 
@@ -50,7 +51,7 @@ const handleCardClick = (slug: string) => {
           {/* Left Arrow Button */}
           <button
             onClick={() => scroll('left')}
-            className="absolute -left-5 top-1/3 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-navy-200 bg-white flex items-center justify-center text-navy-600 shadow-md hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 hidden md:flex"
+            className="absolute -left-5 top-1/3 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-navy-200 bg-white items-center justify-center text-navy-600 shadow-md hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 hidden md:flex"
             aria-label="Previous"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -66,7 +67,7 @@ const handleCardClick = (slug: string) => {
              key={service.title} 
              service={service}
               index={i} 
-              onClick={() =>handleCardClick(service.slug)} />
+              onClick={() =>handleCardClick(service.slug!)} />
           ))}
         </div>
          <button
@@ -98,7 +99,7 @@ function PopularCard({
   index,
   onClick
 }: {
-  service: Service;
+  service: IService;
   index: number;
   onClick: () => void;
 }) {
@@ -121,7 +122,7 @@ function PopularCard({
         {/* Image */}
         <div className="overflow-hidden rounded-xl">
           <img
-            src={service.image}
+            src={service.filePath}
             alt={service.title}
             className="w-full h-48 object-cover rounded-xl transition-all duration-500 group-hover:scale-105"
           />
@@ -140,13 +141,13 @@ function PopularCard({
           {/* Provider + rating */}
           <div className="flex items-center justify-between gap-2 text-xs mb-1 mt-1">
             <span className="text-navy-500 capitalize line-clamp-1 break-all group-hover:text-primary-600 transition-colors">
-              {service.provider}
+              {service.worker}
             </span>
             <div className="flex items-center gap-1 whitespace-nowrap text-sm">
               <Star className="w-4 h-4 -mt-0.5 text-yellow-300 fill-yellow-300" />
               <span>
-                <span className="font-semibold text-navy-900">{service.rating.toFixed(1)}</span>{' '}
-                <span className="text-navy-400">({service.reviews})</span>
+                <span className="font-semibold text-navy-900">{service.ratings}</span>{' '}
+                <span className="text-navy-400">({service.comments})</span>
               </span>
             </div>
           </div>

@@ -1,16 +1,7 @@
 import slugify from "slugify";
+import { IService } from "@/models/service"; 
+import { IBooking } from "@/models/booking";
 
-export interface Service {
-  id: number;
-  title: string;
-  provider: string;
-  rating: number;
-  reviews: number;
-  price: string;
-  description: string;
-  image: string;
-  slug: string;
-}
 
 export function generateSlug(text: string): string {
   return slugify(text, {
@@ -20,82 +11,91 @@ export function generateSlug(text: string): string {
   });
 }
 
-const rawServices = [
-  {
-    id: 1,
-    title: "Leak Detection & Repair",
-    provider: "FlowFix Certified Team",
-    rating: 4.9,
-    reviews: 320,
-    price: "From $89.00",
-    description:
-      "Advanced leak detection technology to find and fix leaks quickly, minimizing water damage and saving you money on utility bills.",
-    image:
-      "https://images.pexels.com/photos/8105045/pexels-photo-8105045.jpeg?auto=compress&cs=tinysrgb&w=600",
+const rawServices: IService[] = [
+ {
+  "id": "srv-92834",
+  "title": "Premium House Painting",
+  "description": "Full-service interior and exterior residential painting with premium eco-friendly materials.",
+  "ratings": 4.8,
+  "price": 1250.00,
+  "isActive": true,
+  "filePath": "https://images.pexels.com/photos/5583116/pexels-photo-5583116.jpeg",
+  "worker": "Ronish Karki",
+  "warranty": "2 Years",
+  "teamSize": "3",
+  "response": "Within 2 hours",
+  "duration": "3-5 Days",
+  "features": "Eco-friendly paint, Surface priming, Post-job cleanup, Color consultation",
+  "comments": 14,
+  "createdBy": "Admin-1",
+  "updatedBy": "Admin-2",
+  "createdAt": "2026-08-15T10:30:00Z",
+  "updatedAt": "2026-08-27T07:15:22Z",
+  "reviews" : [
+    {
+    name: "Emily Johnson",
+    message: "Absolutely love this product! It exceeded my expectations and arrived super fast.",
+    rating: 5,
+    created_at: "2026-08-28T14:32:00.000Z"
   },
   {
-    id: 2,
-    title: "Pipe Installation & Repair",
-    provider: "FlowFix Certified Team",
-    rating: 4.8,
-    reviews: 210,
-    price: "From $150.00",
-    description:
-      "Professional pipe fitting and installation for new construction and remodeling projects using premium materials and code-compliant methods.",
-    image:
-      "https://images.pexels.com/photos/4219592/pexels-photo-4219592.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Michael Chen",
+    message: "Good quality for the price. The setup took a bit longer than expected, but it works perfectly now.",
+    rating: 4,
+    created_at: "2026-08-30T09:15:00.000Z"
   },
   {
-    id: 3,
-    title: "Water Heater Services",
-    provider: "FlowFix Certified Team",
-    rating: 4.9,
-    reviews: 185,
-    price: "From $210.00",
-    description:
-      "Installation, repair, and maintenance of all water heater types including tankless, traditional, and hybrid systems.",
-    image:
-      "https://images.pexels.com/photos/8099147/pexels-photo-8099147.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 4,
-    title: "Bathroom Remodeling",
-    provider: "FlowFix Certified Team",
-    rating: 5.0,
-    reviews: 142,
-    price: "From $1,200.00",
-    description:
-      "Complete bathroom plumbing for remodels — from fixture installation to shower systems, we handle every detail with precision.",
-    image:
-      "https://images.pexels.com/photos/6585962/pexels-photo-6585962.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 5,
-    title: "Drain Cleaning",
-    provider: "FlowFix Certified Team",
-    rating: 4.7,
-    reviews: 275,
-    price: "From $120.00",
-    description:
-      "Thorough drain cleaning using hydro-jetting and snaking techniques to clear stubborn clogs and keep your pipes flowing freely.",
-    image:
-      "https://images.pexels.com/photos/4218860/pexels-photo-4218860.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 6,
-    title: "Emergency Plumbing",
-    provider: "FlowFix Certified Team",
-    rating: 4.9,
-    reviews: 410,
-    price: "24/7 Service",
-    description:
-      "24/7 emergency plumbing services with rapid response. Burst pipes, sewage backups, and major leaks handled immediately.",
-    image:
-      "https://images.pexels.com/photos/8105045/pexels-photo-8105045.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
+    name: "Sarah Martinez",
+    message: "The item arrived damaged. Customer service was helpful, but I am still waiting for my replacement.",
+    rating: 2,
+    created_at: "2026-09-01T11:45:00.000Z"
+  }
+  ]
+},
+{
+  "id": "2",
+  "title": "Pipe Installation & Repair",
+  "description": "Professional pipe fitting and installation for new construction and remodeling projects using premium materials and code-compliant methods.",
+  "ratings": 4.8,
+  "price": 150.00,
+  "isActive": true,
+  "filePath": "hhttps://images.pexels.com/photos/4219592/pexels-photo-4219592.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "worker": "Sandesh Karki",
+  "warranty": "3 Years",
+  "teamSize": "3",
+  "response": "Within 2 hours",
+  "duration": "3-5 Days",
+  "features": "Eco-friendly paint, Surface priming, Post-job cleanup, Color consultation",
+  "comments": 210,
+  "createdBy": "Admin-1",
+  "updatedBy": "Admin-2",
+  "createdAt": "2026-08-15T10:30:00Z",
+  "updatedAt": "2026-08-27T07:15:22Z"
+},
+{
+  "id": "2",
+  "title": "Water Heater Services",
+  "description": "Installation, repair, and maintenance of all water heater types including tankless, traditional, and hybrid systems.",
+  "ratings": 4.9,
+  "price": 210.00,
+  "isActive": true,
+  "filePath": "https://images.pexels.com/photos/8099147/pexels-photo-8099147.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "worker": "Ronish Karki",
+  "warranty": "3 Years",
+  "teamSize": "3",
+  "response": "Within 2 hours",
+  "duration": "3-5 Days",
+  "features": "Eco-friendly paint, Surface priming, Post-job cleanup, Color consultation",
+  "comments": 210,
+  "createdBy": "Admin-1",
+  "updatedBy": "Admin-2",
+  "createdAt": "2026-08-15T10:30:00Z",
+  "updatedAt": "2026-08-27T07:15:22Z"
+},
 ];
 
-export const services: Service[] = rawServices.map((service) => ({
+export const services: IService[] = rawServices .map((service) => ({
   ...service,
   slug: generateSlug(service.title),
 }));
+

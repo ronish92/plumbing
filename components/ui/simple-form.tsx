@@ -40,7 +40,7 @@ export function FormInput({
         required={required}
         value={value}
         onChange={onChange}
-        className="w-full h-15 px-4 py-2 border border-gray-300 rounded-lg focus:border-transparent"
+        className="w-full h-15 px-4 py-2 border border-gray-300 rounded-lg focus:border-orange-600"
       />
     </div>
   )
@@ -99,7 +99,17 @@ export function FormButton({
 }
 
 // Main Form component
-export function Form({ children, className }: { children: React.ReactNode; className?: string; }) {
+
+interface FormProps {
+  children: React.ReactNode
+  className?: string
+  onSubmit?: (formData: FormData) => Promise<void>
+}
+export function Form({
+  children,
+  className,
+  onSubmit,
+}: FormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState('')
 

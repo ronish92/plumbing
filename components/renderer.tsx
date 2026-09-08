@@ -70,7 +70,7 @@ export function SidebarPanel({ isOpen, onClose, data }: SidebarPanelProps) {
       <div
         className={clsx(
           'fixed inset-y-0 right-0 z-50 flex flex-col w-full bg-white/90 shadow-2xl',
-          'max-w-[86%] md:max-w-[77%] lg:max-w-[67%] xl:max-w-[700px]',
+          'max-w-[90%] md:max-w-[70%] lg:max-w-[55%] xl:max-w-140',
           'transition-transform duration-300 ease-out',
           isVisible ? 'translate-x-0' : 'translate-x-full'
         )}
@@ -95,32 +95,46 @@ export function SidebarPanel({ isOpen, onClose, data }: SidebarPanelProps) {
           </div>
 
           {/* Dynamic Inner Content Layout */}
-          <div className="px-4 md:px-8 py-10">
-            <Columns gap="gap-6 lg:gap-10">
-              <Column>
+          {/* Dynamic Inner Content */}
+<div className="px-4 md:px-8 py-8 md:py-10">
+  <div className="mx-auto max-w-2xl">
 
-             
-                <Image
-                  src={data.imageSrc}
-                  alt={data.imageAlt}
-                  className="w-full object-cover rounded-lg"
-                  size="large"
-                  width={180}
-                  height={180}
-                />
 
-                 <Heading as="h3">{data.title}</Heading>
-                   <Paragraph className="mt-4">{data.subtitle}</Paragraph>
-              </Column>
-              <Column>
-                <List className="mt-6">
-                  {data.listItems.map((item, idx) => (
-                    <Li key={idx}>{item}</Li>
-                  ))}
-                </List>
-              </Column>
-            </Columns>
-          </div>
+    {/* Image */}
+    <div className="flex justify-center">
+      
+      <Image
+        src={data.imageSrc}
+        alt={data.imageAlt}
+        className="w-full max-w-[180px] rounded-xl object-cover"
+        size="large"
+        width={250}
+        height={250}
+      />
+    </div>
+
+    {/* Title + Subtitle */}
+    <div className="mt-6 text-center">
+      
+
+      <Paragraph className="mx-auto mt-3 max-w-xl">
+        {data.subtitle}
+      </Paragraph>
+    </div>
+
+    {/* List */}
+    <div className="mt-8 border-t border-gray-100 pt-6">
+      <List className="space-y-3">
+        {data.listItems.map((item, idx) => (
+          <Li key={idx}>
+            {item}
+          </Li>
+        ))}
+      </List>
+    </div>
+
+  </div>
+</div>
           
         </div>
       </div>

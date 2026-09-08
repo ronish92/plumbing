@@ -3,9 +3,14 @@
 import { motion, useScroll, useTransform, useSpring, type Variants } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
-import { Button } from "./ui/button"
-import Search from "./search"
 
+import Search from "./search"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
 const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 }
 
@@ -22,20 +27,16 @@ const fadeUpVariants: Variants = {
   }),
 }
 
-const scaleInVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.8, rotate: -10 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-      delay: 0.3,
-    },
-  },
-}
+
+
+const CAROUSEL_IMAGES = [
+  { src: "/images/home.jpeg", alt: "SR Plumbing Services - Main" },
+  { src: "/images/home2.png", alt: "SR Plumbing Services - Emergency" },
+  { src: "/images/home3.avif", alt: "SR Plumbing Services - Commercial" },
+  { src: "/images/home4.png", alt: "SR Plumbing Services - building" },
+]
+
+
 
 export function HeroSection() {
   const ref = useRef(null)
@@ -52,8 +53,6 @@ export function HeroSection() {
 
   const rawTextX2 = useTransform(scrollYProgress, [0, 1], [0, 100])
   const textX2 = useSpring(rawTextX2, springConfig)
-
-
 
   return (
     <section
@@ -87,12 +86,6 @@ export function HeroSection() {
 
           {/* Text Content */}
           <div className="space-y-5">
-            {/* <div
-              className="inline-flex items-center gap-2 bg-[#121212] text-white px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
-            >             
-              PROTECT-YOUR-INVESTMENT
-            </div> */}
-
             <div className="space-y-1 overflow-hidden">
               <motion.h1
                 style={{ x: textX1 }}
@@ -122,60 +115,54 @@ export function HeroSection() {
                   SERVICES
                 </motion.span>
               </motion.h1>
-              <p
-                className="text-lg md:text-xl font-mono text-[#121212]/60 tracking-tight pt-2 max-w-2xl"
-              >
-              We are a licensed, insured home services company offering reliable repairs, installations, and maintenance. Zero stress. Courteous professionals. Clean service that stands apart.
+              <p className="text-lg md:text-xl  text-[#121212]/60 tracking-tight pt-2 max-w-2xl">
+                We are a licensed, insured home services company offering reliable repairs, installations, and maintenance. Zero stress. Courteous professionals. Clean service that stands apart.
               </p>
             </div>
 
-             <Search/>
-
-            {/* <div className="flex flex-wrap gap-3 pt-2">
-              <Button
-                className="bg-[#AFFF00] text-[#121212] px-6 py-3 rounded-full font-bold text-sm tracking-wide flex items-center gap-2 transition-transform duration-200 hover:scale-[1.02]"
-              >
-                Sign Up & Save 25%
-              </Button>
-
-              <Button
-                className=" bg-slate-900 text-white px-6 py-3 rounded-full font-bold text-sm tracking-wide transition-all duration-200 hover:scale-[1.02] hover:bg-white hover:text-slate-900 border-2 border-slate-700"
-              >
-                Explore Services
-              </Button>
-            </div> */}
-
-            {/* <div
-              className="flex flex-wrap gap-4 pt-2"
-            >
-              {["Zero Mess", "Rapid Response", "Premium Materials", "Guaranteed Results"].map((benefit, i) => (
-                <div
-                  key={benefit}
-                  className="flex items-center gap-2 text-xs font-mono text-[#121212]/60"
-                >
-                  <div className="w-1.5 h-1.5 bg-[#AFFF00] rounded-full" />
-                  {benefit}
-                </div>
-              ))}
-            </div> */}
+            <Search/>
           </div>
 
-          <div className="relative flex justify-right ml-5"
-           style={{ maskImage: 'radial-gradient(circle, black 60%, transparent 100%)', WebkitMaskImage: 'radial-gradient(circle, black 60%, transparent 100%)' }}>
-
-              <Image
-                src="/images/home.jpeg"
-                alt="SR Plumbing Services"
-                width={600}
-                height={500}
-                className="relative z-10 drop-shadow-2xl"
-                priority
-              />
-            </div>
-         
-
+          {/* Carousel Container */}
+          <div 
+            className="relative flex justify-end ml-5 w-full max-w-[600px]"
+            style={{ 
+              maskImage: 'radial-gradient(circle, black 60%, transparent 100%)', 
+              WebkitMaskImage: 'radial-gradient(circle, black 60%, transparent 100%)' 
+            }}
+          >
+             <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 4000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {CAROUSEL_IMAGES.map((image, index) => (
+                  <CarouselItem key={index} className="basis-full">
+                    <div className="flex items-center justify-center">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={600}
+                        height={500}
+                        className="relative z-10 drop-shadow-2xl object-cover rounded-lg"
+                        priority={index === 0}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
         </div>
-
       </div>
     </section>
   )

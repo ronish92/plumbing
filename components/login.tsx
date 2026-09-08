@@ -1,13 +1,99 @@
 "use client"
 
+import { UserRole } from '@/models/auth/userResponse';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { VolumeX, Volume2 } from "lucide-react"
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { loginModel } from '@/models/auth/login';
+import { toast } from "sonner"
+import { PostLogin, VerifyEmail } from '@/actions/auth/auth';
+
+export const getRedirectByRoles = (roles?: string[]) => {
+  if (!roles || roles.length === 0) return "/login";
+
+
+  if (roles.includes(UserRole.Worker)) {
+    return "/worker/dashboard";
+  }
+
+  if (roles.includes(UserRole.Admin)) {
+    return "/admin/dashboard";
+  }
+  return "/login";
+}
 
 export default function LoginPage() {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>()
+
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<loginModel>();
+
+  const onSubmit = async (data: loginModel) => {
+  setErrorMessage(undefined);
+
+  try {
+    const response = await PostLogin(data);
+
+    if (response?.status && response.data) {
+      setIsLoginSuccess(true);
+
+      toast.success("Login Successful");
+
+      const redirectPath = getRedirectByRoles(
+        response.data.roles
+      );
+
+      router.push(redirectPath);
+      router.refresh();
+
+      return;
+    }
+
+    if (response?.data === "Renewal") {
+      setErrorMessage(response.message);
+      toast.error(response.message);
+      return;
+    }
+
+    if (response?.data === "IsNotAllowed") {
+      const responseOfEmail = await VerifyEmail(
+        data.username,
+        window.location.origin
+      );
+
+      if (responseOfEmail?.status) {
+        setErrorMessage(responseOfEmail.message);
+        toast.info(responseOfEmail.message);
+      } else {
+        toast.error(
+          responseOfEmail?.message ||
+          "Failed to verify email"
+        );
+      }
+
+      return;
+    }
+
+    toast.error(
+      response?.message || "An error occurred during login"
+    );
+
+  } catch (error) {
+    console.error("Login failed:", error);
+    toast.error("Something went wrong. Please try again.");
+  }
+};
+
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 md:p-6 lg:p-8 bg-linear-to-br from-amber-100 via-orange-50 to-teal-100">
@@ -18,7 +104,7 @@ export default function LoginPage() {
             <div className="w-full max-w-105 space-y-6">
               <div className="text-left">
                 <h1 className="text-[32px] font-normal tracking-tight">
-                  Create your account
+                  LOGIN
                 </h1>
               </div>
 
@@ -48,37 +134,63 @@ export default function LoginPage() {
                   </svg>
                   Sign up with Google
                 </Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  {/* Email Input */}
+                  <div className="space-y-2">
 
-                {/* Email Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-[13px] font-normal">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    className="h-12.5 bg-background border border-border rounded-xl focus-visible:ring-1 text-[15px]"
-                  />
-                </div>
+                    <Label htmlFor="email" className="text-[13px] font-normal">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      className="h-12.5 bg-background border border-border rounded-xl focus-visible:ring-1 text-[15px]"
+                      {...register("username", {
+                        required: "Email is required",
+                      })} />
+                    {errors.username && (
+                      <p className="text-xs text-red-500">
+                        {errors.username.message}
+                      </p>
+                    )}
+                  </div>
 
-                {/* Password Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-[13px] font-normal">
-                    Password
-                  </Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    className="h-12.5 bg-background border border-border rounded-xl focus-visible:ring-1 text-[15px]"
-                  />
-                </div>
+                  {/* Password Input */}
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-[13px] font-normal">
+                      Password
+                    </Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      className="h-12.5 bg-background border border-border rounded-xl focus-visible:ring-1 text-[15px]"
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
+                    />
+                    {errors.password && (
+                      <p className="text-xs text-red-500">
+                        {errors.password.message}
+                      </p>
+                    )}
+                  </div>
 
-                {/* Create Account Button */}
-                <Button className="w-full h-12.5 bg-orange-400 text-white-foreground hover:bg-lime font-normal rounded-xl text-[15px]">
-                  Create account
-                </Button>
+                  {!isLoginSuccess &&
+                    <Button
+                      disabled={isSubmitting}
+                      className="w-full h-12.5 bg-orange-400 text-white-foreground hover:bg-lime font-normal rounded-xl text-[15px]">
+
+                      {isSubmitting ? "Submiting..." : "Login"}
+                    </Button>}
+                  {isLoginSuccess && <h2>Redirect... to Dashboad</h2>}
+                  {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
+
+
+
+                </form>
 
                 {/* Already have account link */}
                 <div className="text-center pt-1">
@@ -88,19 +200,21 @@ export default function LoginPage() {
                 </div>
               </div>
             </div>
+
           </div>
+
 
           {/* Right Side - Image Section */}
           <div className="relative lg:rounded-4xl m-0 lg:m-4 overflow-hidden">
-            
+
             {/* Background Image */}
             <img
-              src="/images/plumber.webp"
+              src="/images/plum.jpeg"
               alt="Stylish portrait with headphones and sunglasses"
               className="absolute inset-0 w-full h-full object-cover"
             />
 
-            
+
           </div>
         </div>
       </div>

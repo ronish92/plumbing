@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect } from "react";
+import { InsertUserTracker } from "@/actions/tracker/user-tracker";
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 
@@ -21,6 +25,30 @@ import Process from "@/components/process"
 import ConstructionServices from "@/components/construction-services"
 
 export default function Home() {
+
+ interface IUserTrackerRequest {
+  visitorId: string
+  source: string
+}
+
+   useEffect(() => {
+    const key = 'visitorId';
+    let visitorId = localStorage.getItem(key);
+
+    if (!visitorId) {
+      visitorId = crypto.randomUUID(); 
+      localStorage.setItem(key, visitorId);
+    }
+
+    userTracker(visitorId, "localStorage");
+
+  }, []);
+
+  const userTracker = async (visitorId: string, source: string) => {
+    const formData: IUserTrackerRequest = { visitorId: visitorId, source: source };
+    const res = await InsertUserTracker(formData);
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
