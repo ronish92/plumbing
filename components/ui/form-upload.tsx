@@ -179,7 +179,7 @@ export function FormUpload({
                     e.stopPropagation()
                     removeAt(i)
                   }}
-                  className="shrink-0 rounded-md px-2 py-1 outline outline-1 outline-accent2/50 hover:outline-accent2 hover:bg-accent2/10 transition"
+                  className="shrink-0 rounded-md px-2 py-1 outline-1 outline-accent2/50 hover:outline-accent2 hover:bg-accent2/10 transition"
                   aria-label={`Remove ${file.name}`}
                 >
                   Remove

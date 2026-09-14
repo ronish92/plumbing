@@ -5,69 +5,29 @@ import Link from 'next/link';
 import { ChevronRight, MoveRight } from 'lucide-react';
 import { Heading } from './ui/heading';
 import { Image } from './ui/image';
+import { categories } from '@/data/category';
 
-interface CategoryItem {
-  id: number;
-  title: string;
-  href: string;
-  Image: string;
 
-}
 
 export default function CategoryNavigation() {
-  const categories: CategoryItem[] = [
-    {
-      id: 1,
-      title: 'Plumbing',
-      href: '/plumbing',
-      Image : "/images/c1.png" 
-    },
-    {
-      id: 2,
-      title: 'Electical',
-      href: '/electrical',
-      Image: "/images/c2.png"
-     
-    },
-    {
-      id: 3,
-      title: 'Construction',
-      href: '/construction',
-      Image: "/images/c3.png"
-     
-    },
-    {
-      id: 4,
-      title: 'Painting',
-      href: '/painting',
-      Image: "images/c4.png"
-     
-    },
-    {
-      id: 5,
-      title: 'Carpentry',
-      href: '/carpentry',
-      Image: "images/c5.png"
-      
-    },
-  ];
+
 
   return (
     <>
     <Heading as="h2" textAlign="text-center">Category</Heading>
     <nav aria-label="Category navigation" className="w-full max-w-6xl mx-auto px-4 py-8 bg-white">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center gap-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 items-center gap-y-6">
         {categories.map((category, index) => (
           <Link
             key={category.id}
-            href={category.href}
+             href={`/categories/${category.slug}`}
             className={`flex items-center justify-between lg:justify-center lg:flex-col gap-4 px-6 relative group cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 rounded-md
               ${index !== categories.length - 1 ? 'lg:border-r lg:border-slate-200' : ''}`}
           >
             {/* Visual Icon Accent */}
             <div className="transform transition-transform duration-300 group-hover:scale-105 group-focus-visible:scale-105">
               <Image
-          src={category.Image}
+          src={category.image}
           alt={category.title}
           
           className="object-cover rounded-lg"  

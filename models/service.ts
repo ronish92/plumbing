@@ -14,6 +14,7 @@ export interface IService {
   ratings: number;
   price: number;
   slug?: string;
+  category: string;
   filePath?: string;
   worker?: string;
   warranty? : string;

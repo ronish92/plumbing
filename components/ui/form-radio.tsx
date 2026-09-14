@@ -1,8 +1,6 @@
 import { Paragraph } from '@/components/ui/paragraph'
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
-// ============================================================================
-// FormRadioGroup Component
-// ============================================================================
 
 export type FormRadioProps = {
   heading?: string
@@ -11,6 +9,7 @@ export type FormRadioProps = {
   required?: boolean
   defaultValue?: string
   label?: string
+  register?: UseFormRegisterReturn
 }
 
 export function FormRadioGroup({
@@ -20,6 +19,7 @@ export function FormRadioGroup({
   required = false,
   defaultValue,
   label,
+  register,
 }: FormRadioProps) {
   return (
     <fieldset className="space-y-2">
@@ -38,6 +38,7 @@ export function FormRadioGroup({
             className="flex items-center gap-2 cursor-pointer select-none"
           >
             <input
+            {...register}
               type="radio"
               name={name}
               value={option}

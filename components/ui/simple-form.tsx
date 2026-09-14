@@ -3,17 +3,19 @@
 
 import { useState } from 'react'
 import { clsx } from 'clsx'
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
 interface FormInputProps {
   name: string
   type?: string
   placeholder?: string
   label?: string
-
+  register?: UseFormRegisterReturn
   required?: boolean
   rows?: number
   value?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+
 }
 
 export function FormInput({
@@ -24,6 +26,7 @@ export function FormInput({
   required,
   value,
   onChange,
+  register
 }: FormInputProps) {
   return (
     <div className="space-y-2">
@@ -33,6 +36,7 @@ export function FormInput({
         </label>
       )} */}
       <input
+      {...register}
         id={name}
         name={name}
         type={type}
@@ -54,6 +58,7 @@ export function FormTextArea({
   rows = 4,
   value,
   onChange,
+  register
 }: FormInputProps) {
   return (
     <div className="space-y-2">
@@ -63,6 +68,7 @@ export function FormTextArea({
         </label>
       )} */}
       <textarea
+      {...register}
         id={name}
         name={name}
         placeholder={placeholder}

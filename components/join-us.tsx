@@ -7,7 +7,6 @@ import { FormRadioGroup } from './ui/form-radio'
 import { FormCheckboxGroup } from './ui/form-checkbox'
 import { FormName } from './ui/form-name'
 import {
-  Form,
   FormInput,
   FormTextArea,
   FormButton,
@@ -15,10 +14,21 @@ import {
 } from '@/components/ui/simple-form'
 import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useForm } from 'react-hook-form';
 
 
 
 export default function Application() {
+
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const [alpineTranslateX, setAlpineTranslateX] = useState(-100);
@@ -167,7 +177,8 @@ export default function Application() {
           you're interested in. We'll review your application and get in touch if
           there's a good fit.
         </p>
-        <Form className=' mx-auto max-w-3xl px-5'>
+        <form   onSubmit={handleSubmit(onSubmit)} 
+        className=' mx-auto max-w-3xl px-5'>
 
           <div className="mb-5">
             <Heading as="h3" margin="mb-1">
@@ -185,8 +196,12 @@ export default function Application() {
             placeholder2="Last name*"
             label1="First Name"
             label2="Last Name"
-            requiredFirst
-            requiredSecond
+             registerFirst={register("firstName", {
+    required: "First name is required",
+  })}
+  registerSecond={register("lastName", {
+    required: "Last name is required",
+  })}
           />
           <FormInput
             name="email"
@@ -223,10 +238,12 @@ export default function Application() {
             name="citizenship"
             options={['Yes', 'No']}
             label="Work Authorization"
-            required
+            register={register("workAuthorization", {
+    required: "Please select your citizenship status",
+  })}
           />
           <FormCheckboxGroup
-            heading="Which position are you interested in?*"
+            heading="Which position(s) are you interested in?*"
             name="position"
             options={[
               'Plumber',
@@ -235,6 +252,9 @@ export default function Application() {
               'Carpenter',
               'Construction Worker'
             ]}
+            register={register("position", {
+    required: "Please select at least one position",
+  })}
             label="Position"
           />
 
@@ -332,7 +352,7 @@ export default function Application() {
             label="Submit Application"
           // submitMessage="Thank you! Your application has been submitted successfully. We will review it and contact you soon."
           />
-        </Form>
+        </form>
       </div>
     </>
   )

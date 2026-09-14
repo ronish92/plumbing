@@ -1,8 +1,6 @@
 import { Paragraph } from '@/components/ui/paragraph'
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
-// ============================================================================
-// FormCheckboxGroup Component
-// ============================================================================
 
 export type FormCheckboxProps = {
   heading?: string
@@ -10,6 +8,7 @@ export type FormCheckboxProps = {
   options: string[]
   defaultSelected?: string[]
   label?: string
+  register?: UseFormRegisterReturn
 }
 
 export function FormCheckboxGroup({
@@ -18,6 +17,7 @@ export function FormCheckboxGroup({
   options,
   defaultSelected = [],
   label,
+  register
 }: FormCheckboxProps) {
   return (
     <fieldset className="space-y-2">
@@ -36,6 +36,7 @@ export function FormCheckboxGroup({
             className="flex items-center gap-2 cursor-pointer select-none"
           >
             <input
+            {...register}
               type="checkbox"
               name={`${name}[]`}
               value={option}

@@ -23,6 +23,8 @@ import ElectricityServices from "@/components/electricity-services"
 import PaintingServices from "@/components/painting-services"
 import Process from "@/components/process"
 import ConstructionServices from "@/components/construction-services"
+import PetServices from "@/components/pet_services";
+import CarpentryServices from "@/components/carpentry_services";
 
 export default function Home() {
 
@@ -61,6 +63,8 @@ export default function Home() {
       <ElectricityServices/>
       <PaintingServices/>
       <ConstructionServices/>
+      <PetServices/>
+      <CarpentryServices/>
       <PopularServices />   
       <Process/>
       < WhyUs />   

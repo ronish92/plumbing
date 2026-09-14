@@ -1,9 +1,6 @@
 
 import { FormInput } from './simple-form'
-
-// ============================================================================
-// FormName Component (First + Last Name)
-// ============================================================================
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
 
 
@@ -14,6 +11,8 @@ export type FormNameProps = {
   placeholder2?: string
   requiredFirst?: boolean
   requiredSecond?: boolean
+  registerFirst?: UseFormRegisterReturn
+  registerSecond?: UseFormRegisterReturn
   className?: string
   label1?: string
   label2?: string
@@ -29,6 +28,8 @@ export function FormName({
   className = '',
   label1 = '',
   label2 = '',
+  registerFirst,
+  registerSecond,
 }: FormNameProps) {
   return (
     <div className={`flex gap-4 ${className}`}>
@@ -40,6 +41,7 @@ export function FormName({
         required={requiredFirst}
         data-label={label1}
         className={inputBaseStyles}
+        {...registerFirst}
       />
       <input
         id={name2}
@@ -49,6 +51,7 @@ export function FormName({
         required={requiredSecond}
         data-label={label2}
         className={inputBaseStyles}
+        {...registerSecond}
       />
     </div>
   )

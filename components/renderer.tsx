@@ -10,7 +10,7 @@ import { Heading } from '@/components/ui/heading'
 import { Paragraph } from '@/components/ui/paragraph'
 import { List, Li } from '@/components/ui/list'
 
-// Define the exact data shape your sidebar needs to receive
+
 export interface SidebarData {
   id: number
   imageSrc: string
@@ -106,7 +106,7 @@ export function SidebarPanel({ isOpen, onClose, data }: SidebarPanelProps) {
       <Image
         src={data.imageSrc}
         alt={data.imageAlt}
-        className="w-full max-w-[180px] rounded-xl object-cover"
+        className="w-full max-w-45 rounded-xl object-cover"
         size="large"
         width={250}
         height={250}

@@ -7,10 +7,13 @@ import { Heading } from '@/components/ui/heading'
 import { SidebarPanel} from './renderer'
 import { SidebarData } from './renderer'
 import { useState } from 'react'
+import { motion } from "framer-motion"
 
+//  & { href: string; cardImage: string }
 
-  const SERVICES_DETAILS: Record<string, SidebarData> = {
-  "1": {
+  const SERVICES_DETAILS: (SidebarData)[] = [
+  {
+    id: 1,
     imageSrc: "/images/e1.jpg",
     imageAlt: "Hot Water Installation details",
     title: "Electrical Setup & Rewiring",
@@ -21,7 +24,7 @@ import { useState } from 'react'
       "Professional guidance on energy-efficient system upgrades."
     ]
   },
-  "2": {
+  { id: 2,
     imageSrc: "/images/e3.jpeg",
     imageAlt: "Fix all your Leakages",
     title: "Let there be light",
@@ -32,7 +35,8 @@ import { useState } from 'react'
       "Avoiding drain blockages is important to your wallet and your health in the long term. Enlist the services of our professionals."
     ]
   },
-    "3": {
+    {
+      id: 3,
     imageSrc: "/images/e5.jpg",
     imageAlt: "Fix all your Leakages",
     title: "Safety Inspection",
@@ -43,8 +47,9 @@ import { useState } from 'react'
       "Avoiding drain blockages is important to your wallet and your health in the long term. Enlist the services of our professionals."
     ]
   },
-   "4": {
-    imageSrc: "/images/leakage.jpg",
+   {
+    id: 4,
+    imageSrc: "/images/e4.jpg",
     imageAlt: "Fix all your Leakages",
     title: "Electrical Fittings",
     subtitle: "Do you have that one bathroom that always smells vaguely like a sewer even after it’s been scrubbed or that one outlet takes an age to drain?",
@@ -54,74 +59,57 @@ import { useState } from 'react'
       "We specialize in the installation and maintenance of air conditioning units, guaranteeing optimal performance and energy efficiency."
     ]
   }
-}
+
+  ];
 
 export default function ElectricityServices() {
+  const [activeService, setActiveService] = useState<typeof SERVICES_DETAILS[number] | null>(null)
+  const [isPaused, setIsPaused] = useState(false)
 
-      const [activeService, setActiveService] = useState<SidebarData | null>(null)
-          const handleCardClick = (id: string) => {
-        const data = SERVICES_DETAILS[id]
-        if (data) {
-          setActiveService(data)
-        }
-      }
-    
+
+  const duplicatedServices = [...SERVICES_DETAILS, ...SERVICES_DETAILS]
+
   return (
-    <Section className="pt-10 lg:pt-10 pb-10 bg-linear-to-b from-body to-body-light">
-       <Heading as="h2" textAlign="text-center">Electricity Services</Heading>
-      <Grid className='mt-10' >
-        <Card2
-          id="1"
-          title="Electrical Setup & Rewiring"
-          image="/images/e1.jpg"
-          href="/hot-water"
-          alt="Hot Water Installation"
-          onClick={() => handleCardClick("1")}
-        />
-        <Card2
-          id="2"
-          title="Electrical Repairing & Installing"
-          image="/images/e2.jpg"
-          href="/water-leakage"
-          alt="Fix all your Leakages"
-          onClick={() => handleCardClick("3")}
-        />
-        <Card2
-          id="3"
-          title="Lighting Fitting"
-          image="/images/e3.jpeg"
-          href="/blockage"
-          alt="See the transformation process"
-          onClick={() => handleCardClick("2")}
-        />
-        <Card2
-          id="4"
-          title="Electrical Fittings"
-          image="/images/e4.jpg"
-          href="/burst-pipe"
-          alt=" Our pipe experts"
-          onClick={() => handleCardClick("4")}
-        />
-        {/* <Card2
-          id="5"
-          title="Electrical Safety Inspection"
-          image="/images/e5.jpg"
-          href="/gas-pipes"
-          alt="Call our Gas Fitters"
-        />
-        <Card2
-          id="6"
-          title="Panel Fitting/Repairing"
-          image="/images/e6.jpg"
-          href="/toilet-repairs"
-          alt="Toilet repairs"
-        /> */}
-      </Grid>
-       <SidebarPanel 
-        isOpen={!!activeService}
-        onClose={() => setActiveService(null)}
-        data={activeService}
-      />
+    <Section className="pt-20 lg:pt-20 pb-10 bg-linear-to-b from-body to-body-light overflow-hidden">
+      <Heading as="h2" textAlign="text-center">Electricity Services</Heading>
+      
+      {/* Outer track wrapper */}
+      <div className="relative mt-10 w-full overflow-hidden flex mask-image:[linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+        
+        <motion.div
+          className="flex gap-6 pr-6 min-w-max flex-nowrap"
+          animate={isPaused ? "paused" : "animate"}
+          variants={{
+            animate: {
+              x: [0, "-50%"],
+              transition: {
+                ease: "linear",
+                duration: 40, 
+                repeat: Infinity,
+              }
+            },
+            paused: {} 
+          }}
+          // Reliable state handlers for cross-platform hovering
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {duplicatedServices.map((service, index) => (
+            <div key={`${service.id}-${index}`} className="w-75 sm:w-87.5 shrink-0">
+              <Card2
+                id={String(service.id)}
+                title={service.title}
+                image={service.imageSrc}
+                alt={service.imageAlt}
+                onClick={() => setActiveService(service)}
+              />
+            </div>
+          ))}
+        </motion.div>
+
+      </div>
+
+      <SidebarPanel isOpen={!!activeService} onClose={() => setActiveService(null)} data={activeService} />
     </Section>
   )
 }

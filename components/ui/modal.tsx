@@ -35,14 +35,15 @@ const Modal: React.FC<ModalProps> = ({
     };
 
     document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden"
+    return () => { document.body.style.overflow = "" }
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/50"
       onClick={onClose}
     >
       <div
