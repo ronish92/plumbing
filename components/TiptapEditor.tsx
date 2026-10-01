@@ -164,7 +164,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </div>
 
             {/* Editor Content */}
-            <EditorContent editor={editor} className="min-h-[200px] max-h-[400px] overflow-auto" />
+            <EditorContent editor={editor} className="min-h-50 max-h-100 overflow-auto" />
         </div>
     )
 }
