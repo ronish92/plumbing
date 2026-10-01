@@ -43,9 +43,10 @@ export function Image({
       priority={priority}
       className={clsx(
         'object-cover',
-        !fill && 'h-auto',
+        
         rounded,
-        className
+        className,
+        !fill && 'h-auto',
       )}
     />
   )

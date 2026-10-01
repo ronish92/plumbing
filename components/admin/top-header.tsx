@@ -24,13 +24,15 @@ const navItems = [
     label: 'Services',
     href: '/admin/services',
   },
+
   {
-    label: 'Messages',
-    href: '/admin/messages',
-  },
-  {
-    label: 'Workers',
+    label: 'Employees',
     href: '/admin/workers',
+  },
+
+  {
+    label: 'Users',
+    href: '/admin/users',
   },
 ]
 

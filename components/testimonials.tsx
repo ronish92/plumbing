@@ -93,13 +93,13 @@ export default function Testimonial() {
                 >
                   {testimonial.title}
                 </Paragraph>
-                <Paragraph
+                {/* <Paragraph
                   color="text-accent3/80"
                   fontSize="text-sm"
                   margin="mt-1"
                 >
                   {testimonial.publication}
-                </Paragraph>
+                </Paragraph> */}
               </div>
             </div>
           </div>

@@ -4,20 +4,33 @@ import axiosInstance from "@/helper/axios-instance";
 import { ChangePasswordModel, ResetPasswordModel, loginModel } from "@/models/auth/login";
 import { ResponseModel } from "@/models/response";
 import { SetCookieWeb } from "./authCookie";
-import { cookies } from "next/headers";
+
+import { userResponseModel } from "@/models/auth/userResponse";
 
 export const PostLogin = async (data: loginModel) => {
-  const response = (await axiosInstance.post("login", {
-    username: data.username,
-    password: data.password,
+  try {
+  
+
+    const response = (await axiosInstance.post("api/Access/api/login", {
+      username: data.username,
+      password: data.password,
       ...(data.employeecode && {
-    employeecode: data.employeecode,
-  }),
-  })) as ResponseModel;
-  if (response?.status) {
-    await SetCookieWeb(response.data);
+        employeecode: data.employeecode,
+      }),
+    })) as ResponseModel<userResponseModel>;
+
+  
+
+    if (response?.status) {
+      await SetCookieWeb(response.data);
+    
+    }
+
+    return response;
+  } catch (error) {
+    
+    throw error;
   }
-  return response;
 };
 
 export const VerifyEmail = async (email: string, currentUrl: string) => {
@@ -74,10 +87,10 @@ export const ChangePasswordAction = async (formData: ChangePasswordModel) => {
 };
 
 
-export async function isAuthenticated() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+// export async function isAuthenticated() {
+//   const cookieStore = await cookies();
+//   const token = cookieStore.get("token")?.value;
 
-  return !!token;
-}
+//   return !!token;
+// }
 

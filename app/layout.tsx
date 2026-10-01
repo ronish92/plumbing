@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { LenisProvider } from "@/components/lenis-provider"
 import ClickSpark from "@/components/click-spark"
 import "./globals.css"
+import QueryProvider from "@/components/query-provider"
 
 
 
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
+        <QueryProvider>
         <ClickSpark
           sparkColor="#ffc800"
           sparkSize={12}
@@ -39,6 +41,7 @@ export default function RootLayout({
           <LenisProvider>{children}</LenisProvider>
           <Toaster/>
         </ClickSpark>
+        </QueryProvider>
 
       </body>
     </html>

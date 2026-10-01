@@ -64,6 +64,7 @@ export function Footer() {
               <Logo
                 className="mb-7"
                 width={220}
+                h-auto
               />
               <Heading
                 as="h4"

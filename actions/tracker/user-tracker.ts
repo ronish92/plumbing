@@ -1,3 +1,5 @@
+"use server";
+
 import axiosInstance from "@/helper/axios-instance";
 import { ResponseModel } from "@/models/response";
 

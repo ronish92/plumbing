@@ -1,436 +1,36 @@
 "use client"
 
-import type React from "react"
-import {
-  CreditCard,
-  Users2,
-  Shield,
-  Settings,
-  HelpCircle,
-  ChevronDown,
-  Home,
-  ShoppingCart,
-  Package,
-  FileText,
-  Database,
-  Globe,
-  ImageIcon,
-  Monitor,
- Lock,
-  Eye,
-  Bell,
-  MessageSquare,
-  Headphones,
-  Play,
-  Bookmark,
-  Tag,
-  Edit,
-  Minus,
-  Check,
-  Star,
-  Clock,
 
+import {
+Settings, HelpCircle, ChevronDown
 } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { SidebarProvider, useSidebar } from "@/components/sidebar-context"
+import { menuData, MenuItem, SubMenuItem } from "@/data/sidebar-menu"
 
 type MenuState = "full" | "collapsed" | "hidden"
 
-interface SubMenuItem {
-  id: string
-  label: string
-  href: string
-  icon?: React.ComponentType<any>
-  badge?: string
-  isNew?: boolean
-  children?: SubMenuItem[]
-}
 
-interface MenuItem {
-  id: string
-  label: string
-  href?: string
-  icon: React.ComponentType<any>
-  badge?: string
-  isNew?: boolean
-  children?: SubMenuItem[]
-}
 
-interface MenuSection {
-  id: string
-  label: string
-  items: MenuItem[]
-}
 
-const menuData: MenuSection[] = [
-  {
-    id: "overview",
-    label: "Overview",
-    items: [
-      {
-        id: "dashboard",
-        label: "Dashboard",
-        href: "/dashboard",
-        icon: Home,
-      },
-    ],
-  },
-  {
-    id: "ecommerce",
-    label: "Work Portal",
-    items: [
-      {
-        id: "products",
-        label: "Services",
-        href: "/products",
-        icon: Package,
-        children: [
-          {
-            id: "all-services",
-            label: "All Services",
-            href: "/company/services",
-            icon: Package,
-          },
-          {
-            id: "categories",
-            label: "Categories",
-            href: "/products/categories",
-            icon: Tag,
-            children: [
-              {
-                id: "electronics",
-                label: "Electricity",
-                href: "/products/categories/electronics",
-                icon: Monitor,
-              },
-              {
-                id: "clothing",
-                label: "Plumbing",
-                href: "/products/categories/clothing",
-                icon: ShoppingCart,
-              },
-              {
-                id: "books",
-                label: "Construction",
-                href: "/products/categories/books",
-                icon: FileText,
-              },
-            ],
-          },
-          {
-            id: "inventory",
-            label: "Add a Service",
-            href: "/products/inventory",
-            icon: Database,
-          },
-          {
-            id: "reviews",
-            label: "Reviews",
-            href: "/products/reviews",
-            icon: Star,
-          },
-        ],
-      },
-      {
-        id: "orders",
-        label: "Bookings",
-        href: "/orders",
-        icon: ShoppingCart,
-        badge: "5",
-        children: [
-          {
-            id: "all-orders",
-            label: "All Bookings",
-            href: "/orders/all",
-            icon: ShoppingCart,
-          },
-          {
-            id: "pending",
-            label: "Pending",
-            href: "/orders/pending",
-            icon: Clock,
-            badge: "3",
-          },
-          {
-            id: "delivered",
-            label: "Completed",
-            href: "/orders/delivered",
-            icon: Check,
-          },
-        ],
-      },
-      {
-        id: "customers",
-        label: "Customers",
-        href: "/customers",
-        icon: Users2,
-        children: [
-          {
-            id: "all-customers",
-            label: "All Customers",
-            href: "/customers/all",
-            icon: Users2,
-          },
-
-          {
-            id: "reviews",
-            label: "Customer Reviews",
-            href: "/customers/reviews",
-            icon: MessageSquare,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "finance",
-    label: "Finance",
-    items: [
-      {
-        id: "payments",
-        label: "Payments",
-        href: "/payments",
-        icon: CreditCard,
-        children: [
-          {
-            id: "payment-methods",
-            label: "Payment Methods",
-            href: "/payments/methods",
-            icon: CreditCard,
-          },
-          {
-            id: "payment-history",
-            label: "Payment History",
-            href: "/payments/history",
-            icon: Clock,
-          },
-          {
-            id: "refunds",
-            label: "Refunds",
-            href: "/payments/refunds",
-            icon: Minus,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "content",
-    label: "Content Management",
-    items: [
-      {
-        id: "pages",
-        label: "Pages",
-        href: "/pages",
-        icon: FileText,
-        children: [
-          {
-            id: "all-pages",
-            label: "All Pages",
-            href: "/pages/all",
-            icon: FileText,
-          },
-          {
-            id: "blog",
-            label: "Blog",
-            href: "/pages/blog",
-            icon: Edit,
-            children: [
-              {
-                id: "posts",
-                label: "Posts",
-                href: "/pages/blog/posts",
-                icon: FileText,
-              },
-              {
-                id: "categories",
-                label: "Categories",
-                href: "/pages/blog/categories",
-                icon: Tag,
-              },
-              {
-                id: "tags",
-                label: "Tags",
-                href: "/pages/blog/tags",
-                icon: Bookmark,
-              },
-            ],
-          },
-          {
-            id: "landing-pages",
-            label: "Landing Pages",
-            href: "/pages/landing",
-            icon: Globe,
-          },
-        ],
-      },
-      {
-        id: "media",
-        label: "Media",
-        href: "/media",
-        icon: ImageIcon,
-        children: [
-          {
-            id: "images",
-            label: "Images",
-            href: "/media/images",
-            icon: ImageIcon,
-          },
-          {
-            id: "videos",
-            label: "Videos",
-            href: "/media/videos",
-            icon: Play,
-          },
-          {
-            id: "audio",
-            label: "Audio",
-            href: "/media/audio",
-            icon: Headphones,
-          },
-          {
-            id: "documents",
-            label: "Documents",
-            href: "/media/documents",
-            icon: FileText,
-          },
-        ],
-      },
-
-    ],
-  },
-  {
-    id: "team",
-    label: "Workers & Team",
-    items: [
-      {
-        id: "members",
-        label: "Members",
-        href: "/members",
-        icon: Users2,
-        children: [
-          {
-            id: "all-members",
-            label: "All Members",
-            href: "/members/all",
-            icon: Users2,
-          },
-          {
-            id: "roles",
-            label: "Roles",
-            href: "/members/roles",
-            icon: Shield,
-            children: [
-              {
-                id: "admin",
-                label: "Administrators",
-                href: "/members/roles/admin",
-                icon: Shield,
-              },
-              {
-                id: "editor",
-                label: "Editors",
-                href: "/members/roles/editor",
-                icon: Edit,
-              },
-              {
-                id: "viewer",
-                label: "Viewers",
-                href: "/members/roles/viewer",
-                icon: Eye,
-              },
-            ],
-          },
-          {
-            id: "permissions",
-            label: "Permissions",
-            href: "/members/permissions",
-            icon: Lock,
-          },
-        ],
-      },
-
-    ],
-  },
-
-]
 
 export default function Sidebar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [menuState, setMenuState] = useState<MenuState>("full")
-  const [isHovered, setIsHovered] = useState(false)
-  const [previousDesktopState, setPreviousDesktopState] = useState<MenuState>("full")
-  const [isMobile, setIsMobile] = useState(false)
+
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
-  const router = useRouter()
+
+ const {
+  menuState,
+  isHovered,
+  setIsHovered,
+  isMobile,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+} = useSidebar()
 
  
-  const toggleMenuState = () => {
-    setMenuState((prev) => {
-      switch (prev) {
-        case "full":
-          return "collapsed"
-        case "collapsed":
-          return "hidden"
-        case "hidden":
-          return "full"
-        default:
-          return "full"
-      }
-    })
-  }
-
-  // Function to set menu state from theme customizer
-  const setMenuStateFromCustomizer = (state: MenuState) => {
-    if (!isMobile) {
-      setMenuState(state)
-    }
-  }
-
-  // Handle responsive behavior
-  useEffect(() => {
-    const handleResize = () => {
-      const isDesktop = window.innerWidth >= 1024 // lg breakpoint
-      setIsMobile(!isDesktop)
-
-      if (!isDesktop) {
-        // On mobile/tablet, save current desktop state and set to hidden
-        if (menuState !== "hidden") {
-          setPreviousDesktopState(menuState)
-          setMenuState("hidden")
-        }
-      } else {
-        // On desktop, restore previous state if coming from mobile
-        if (menuState === "hidden" && previousDesktopState !== "hidden") {
-          setMenuState(previousDesktopState)
-        }
-      }
-    }
-
-    // Check on mount
-    handleResize()
-
-    // Add event listener
-    window.addEventListener("resize", handleResize)
-
-    return () => window.removeEventListener("resize", handleResize)
-  }, [menuState, previousDesktopState])
-
-  // Export functions to window for TopNav and ThemeCustomizer to access
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      ; (window as any).toggleMenuState = toggleMenuState
-        ; (window as any).menuState = menuState
-        ; (window as any).isHovered = isHovered
-        ; (window as any).isMobile = isMobile
-        ; (window as any).setIsMobileMenuOpen = setIsMobileMenuOpen
-        ; (window as any).isMobileMenuOpen = isMobileMenuOpen
-        ; (window as any).setMenuStateFromCustomizer = setMenuStateFromCustomizer
-    }
-  }, [menuState, isHovered, isMobile, isMobileMenuOpen])
 
   function handleNavigation() {
     if (isMobile) {
@@ -476,9 +76,9 @@ export default function Sidebar() {
         onClick={() => {
           if (hasChildren) {
             toggleExpanded(itemId)
-          } else 
+          } else
             handleNavigation()
-        
+
         }}
         title={menuState === "collapsed" && !isHovered && !isMobile ? item.label : undefined}
       >
@@ -524,7 +124,7 @@ export default function Sidebar() {
         {item.href && !hasChildren ? <Link href={item.href}>{content}</Link> : content}
         {hasChildren && isExpanded && showText && (
           <div className="mt-1 space-y-1">
-            {item.children!.map((child) => (
+            {item.children!.map((child: any) => (
               <NavItem key={child.id} item={child} level={level + 1} parentId={itemId} />
             ))}
           </div>
@@ -569,7 +169,7 @@ export default function Sidebar() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 w-full"
               >
-                <img
+                <Image
                   src="/images/logo.png"
                   alt="CMSFullForm"
                   width={32}
@@ -647,7 +247,7 @@ export default function Sidebar() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 w-full"
               >
-              
+
                 <Image
                   src="/images/logo.png"
                   alt="CMSFullForm"
@@ -661,7 +261,7 @@ export default function Sidebar() {
               </Link>
             ) : (
               <div className="flex justify-center w-full">
-               
+
                 <img
                   src="/images/logo.png"
                   alt="CMSFullForm"
@@ -699,8 +299,8 @@ export default function Sidebar() {
           </div>
 
           <div className="px-2 py-4 border-t border-gray-200 dark:border-[#1F1F23] text-xs">
-          
-             ©2026 SHS Inc. All rights reserved
+
+            ©2026 SHS Inc. All rights reserved
 
           </div>
         </div>

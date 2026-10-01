@@ -1,8 +1,8 @@
-export type ResponseModel = {
+export type ResponseModel<T = unknown> = {
   status: boolean;
   message: string;
-  data: any;
-  pagination: pagination | null
+  data: T;
+  pagination: pagination | null;
 };
 
 export interface pagination {

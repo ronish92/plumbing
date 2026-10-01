@@ -4,32 +4,43 @@ import { UserRole } from '@/models/auth/userResponse';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { loginModel } from '@/models/auth/login';
 import { toast } from "sonner"
-import { PostLogin, VerifyEmail } from '@/actions/auth/auth';
+import { PostLogin} from '@/actions/auth/auth';
+import { useState } from 'react';
+import RegisterUserPage from '@/app/register/register-user';
+import RegisterCompanyPage from '@/app/register/register-company';
+import UserTypeSelector from '@/app/register/select-user';
 
-export const getRedirectByRoles = (roles?: string[]) => {
-  if (!roles || roles.length === 0) return "/login";
 
 
-  if (roles.includes(UserRole.Worker)) {
+export const getRedirectByRoles = (role?: string) => {
+  if (!role || role.length === 0) return "/login";
+
+
+    if (role.includes(UserRole.SuperAdmin)) {
+    return "/company";
+  }
+
+   if (role.includes(UserRole.Admin)) {
+    return "/admin/dashboard";
+  }
+
+  if (role.includes(UserRole.Worker)) {
     return "/worker/dashboard";
   }
 
-  if (roles.includes(UserRole.Admin)) {
-    return "/admin/dashboard";
-  }
+
   return "/login";
 }
 
 export default function LoginPage() {
-  const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false)
-  const [errorMessage, setErrorMessage] = useState<string>()
 
   const router = useRouter();
+  const [view, setView] = useState<'login' | 'select-type' | 'register-user' | 'register-company'>('login');
 
   const {
     register,
@@ -38,18 +49,18 @@ export default function LoginPage() {
   } = useForm<loginModel>();
 
   const onSubmit = async (data: loginModel) => {
-  setErrorMessage(undefined);
+
 
   try {
     const response = await PostLogin(data);
+    
 
     if (response?.status && response.data) {
-      setIsLoginSuccess(true);
 
       toast.success("Login Successful");
 
       const redirectPath = getRedirectByRoles(
-        response.data.roles
+        response.data.role
       );
 
       router.push(redirectPath);
@@ -58,30 +69,6 @@ export default function LoginPage() {
       return;
     }
 
-    if (response?.data === "Renewal") {
-      setErrorMessage(response.message);
-      toast.error(response.message);
-      return;
-    }
-
-    if (response?.data === "IsNotAllowed") {
-      const responseOfEmail = await VerifyEmail(
-        data.username,
-        window.location.origin
-      );
-
-      if (responseOfEmail?.status) {
-        setErrorMessage(responseOfEmail.message);
-        toast.info(responseOfEmail.message);
-      } else {
-        toast.error(
-          responseOfEmail?.message ||
-          "Failed to verify email"
-        );
-      }
-
-      return;
-    }
 
     toast.error(
       response?.message || "An error occurred during login"
@@ -92,6 +79,29 @@ export default function LoginPage() {
     toast.error("Something went wrong. Please try again.");
   }
 };
+if (view === 'select-type') {
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-linear-to-br from-amber-100 via-orange-50 to-teal-100">
+      <UserTypeSelector
+        onSelect={(type) =>
+          setView(type === 'user' ? 'register-user' : 'register-company')
+        }
+      />
+    </div>
+  );
+}
+
+if (view === 'register-user') {
+  return (
+    <RegisterUserPage onBack={() => setView('select-type')} />
+  );
+}
+
+if (view === 'register-company') {
+  return (
+    <RegisterCompanyPage onBack={() => setView('select-type')} />
+  );
+}
 
 
 
@@ -132,7 +142,7 @@ export default function LoginPage() {
                       fill="#EA4335"
                     />
                   </svg>
-                  Sign up with Google
+                  Sign in with Google
                 </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   {/* Email Input */}
@@ -177,15 +187,15 @@ export default function LoginPage() {
                     )}
                   </div>
 
-                  {!isLoginSuccess &&
+                
                     <Button
                       disabled={isSubmitting}
                       className="w-full h-12.5 bg-orange-400 text-white-foreground hover:bg-lime font-normal rounded-xl text-[15px]">
 
-                      {isSubmitting ? "Submiting..." : "Login"}
-                    </Button>}
-                  {isLoginSuccess && <h2>Redirect... to Dashboad</h2>}
-                  {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                      {isSubmitting ? "Submitting..." : "Login"}
+                    </Button>
+              
+                 
 
 
 
@@ -194,8 +204,12 @@ export default function LoginPage() {
 
                 {/* Already have account link */}
                 <div className="text-center pt-1">
-                  <button className="text-[14px] font-normal text-muted-foreground hover:text-foreground transition-colors">
-                    Already have an account?
+                  <span className='text-[16px]'>Don't have an account? </span>
+                  <button 
+                    type='button'
+                    onClick={() => setView('select-type')}
+                    className="text-[17px] font-normal text-muted-foreground hover:text-orange-500 cursor-pointer transition-colors">
+                    Register Here
                   </button>
                 </div>
               </div>

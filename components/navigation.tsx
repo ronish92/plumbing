@@ -42,7 +42,7 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Logo
-          className="mb-7"
+        
           width={80}
           height={50}
         />
@@ -60,12 +60,12 @@ export function Navigation() {
               <Link
                 href={item.href}
                 className={`group relative text-sm font-medium tracking-wide transition-colors ${scrolled
-                    ? "text-white/80 hover:text-[#AFFF00]"
-                    : "text-[#121212]/80 hover:text-[#121212]"
+                    ? "text-white/80 hover:text-black"
+                    : "text-[#121212]/80 hover:text-orange-500"
                   }`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#AFFF00] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-black transition-all duration-300 group-hover:w-full" />
               </Link>
             </motion.div>
           ))}
@@ -74,7 +74,7 @@ export function Navigation() {
         <motion.button
 className={`hidden md:block text-[#121212] px-6 py-2.5 rounded-full font-bold text-sm tracking-wide relative overflow-hidden ${
   scrolled 
-    ? "bg-white backdrop-blur-md border-b border-bg-orange-400" 
+    ? "bg-white backdrop-blur-md border-b border-bg-orange-400  hover:bg-lime" 
     : "bg-orange-400 hover:bg-lime"
 }`}
 

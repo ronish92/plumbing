@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import axios from "axios";
 
 
-export const baseUrl = process.env.API_BASE_URL;
+const baseUrl = process.env.API_BASE_URL;
 
 export async function POST() {
   const cookieStore = await cookies();

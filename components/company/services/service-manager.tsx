@@ -35,6 +35,7 @@ export function ServicesManager() {
   "isActive": true,
   "filePath": "https://images.pexels.com/photos/5583116/pexels-photo-5583116.jpeg",
   "worker": "Ronish Karki",
+  "category": "Painting",
   "warranty": "2 Years",
   "teamSize": "3",
   "response": "Within 2 hours",

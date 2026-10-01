@@ -16,7 +16,7 @@ import { motion } from "framer-motion"
     id: 1,
     imageSrc: "/images/e1.jpg",
     imageAlt: "Hot Water Installation details",
-    title: "Electrical Setup & Rewiring",
+    title: "Electrical Setup",
     subtitle: "Do you have issues with your hot water unit or need an upgrade?",
     listItems: [
       "Whether it is a new electrical setup or replacing it, our men know what’s right and will offer you the best possible solution.",
@@ -27,7 +27,7 @@ import { motion } from "framer-motion"
   { id: 2,
     imageSrc: "/images/e3.jpeg",
     imageAlt: "Fix all your Leakages",
-    title: "Let there be light",
+    title: "Light Installation",
     subtitle: "Do you have that one bathroom that always smells vaguely like a sewer even after it’s been scrubbed or that one outlet takes an age to drain?",
     listItems: [
       "We are known for the best in town for light decorative services that go hassle free with our trained professionals at work.",

@@ -11,7 +11,7 @@ export function generateSlug(text: string): string {
 
 export const rawCategories: ICategory[] = [
   {
-    id: 1,
+    id: "1",
     title: "Plumbing",
     image: "/images/c1.png",
   },

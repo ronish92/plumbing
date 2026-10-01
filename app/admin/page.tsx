@@ -1,6 +1,6 @@
 
 
-import { Settings, List, Maximize2, AlertCircle, Copy, FileText, Plus, User, ChevronsLeftRightIcon, ChevronRight, Eye, TrendingUp } from 'lucide-react'
+import { AlertCircle, Copy, FileText, Plus, User, Eye, TrendingUp } from 'lucide-react'
 import './service-popularity';
 import { ServicePopularityDonut } from './service-popularity';
 import { AllBookings } from './all-bookings';

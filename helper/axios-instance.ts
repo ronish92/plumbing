@@ -1,4 +1,3 @@
-"use server";
 
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import https from "https";
@@ -9,7 +8,8 @@ import {
   SetCookieWeb,
 } from "@/actions/auth/authCookie";
 
-export const baseUrl = process.env.API_BASE_URL;
+const baseUrl = process.env.API_BASE_URL;
+console.log("API BASE URL:", process.env.API_BASE_URL);
 
 
 const getHttpsAgent = () => {
@@ -90,7 +90,7 @@ axiosInstance.interceptors.response.use(
             });
 
             // Handle standard Axios shape from refreshAxios (which doesn't unwrap data)
-            const refreshData = refreshResponse.data;
+            const refreshData = refreshResponse;
 
             if (!refreshData?.status || !refreshData.data?.token) {
               throw new Error("Invalid refresh token response structure");

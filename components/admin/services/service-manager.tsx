@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { IService } from "@/models/service"; 
 import { Button } from "@/components/ui/button";
-import { Plus, Edit, Trash2, RefreshCw, Code, FileJson, Settings, Star, IndianRupee, CurrencyIcon, Search, User } from "lucide-react";
+import { Plus, Edit, Trash2, RefreshCw, Code, FileJson, Settings, Star, IndianRupee, CurrencyIcon, Search, User, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { ServiceForm } from "./service-modal";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 export function ServicesManager() {
 
   const [showForm, setShowForm] = useState(false);
-  const [editingService, setEditingService] = useState<IService | null>(null); // Changed type
+  const [editingService, setEditingService] = useState<IService | null>(null); 
   const [serviceToDelete, setServiceToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -32,6 +32,7 @@ export function ServicesManager() {
   "description": "Full-service interior and exterior residential painting with premium eco-friendly materials.",
   "ratings": 4.8,
   "price": 1250.00,
+  "category": "",
   "isActive": true,
   "filePath": "https://images.pexels.com/photos/5583116/pexels-photo-5583116.jpeg",
   "worker": "Ronish Karki",
@@ -134,11 +135,11 @@ export function ServicesManager() {
 
       {/* Form Modal */}
       <Modal
-        title={editingService ? "Edit Service" : "Add Service"}
+        title={"View Service"}
         isOpen={showForm}
         onClose={() => {
           setShowForm(false);
-          setEditingService(null);
+         
         }}
         size="xl"
       >
@@ -147,7 +148,7 @@ export function ServicesManager() {
           onSuccess={handleFormSuccess}
           onCancel={() => {
             setShowForm(false);
-            setEditingService(null);
+          
           }}
         />
       </Modal>
@@ -242,20 +243,12 @@ function ServiceRow({
           size="icon"
           className="h-8 w-8"
           onClick={() => onEdit(service)}
-          title="Edit service"
+          title="View Service"
         >
-          <Edit className="h-4 w-4" />
+          <Eye className="h-4 w-4" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 text-red-600 hover:bg-red-50 hover:text-red-700"
-          onClick={() => onDelete(service.id)}
-          title="Delete service"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+       
       </div>
     </div>
   );

@@ -28,28 +28,28 @@ import CarpentryServices from "@/components/carpentry_services";
 
 export default function Home() {
 
- interface IUserTrackerRequest {
-  visitorId: string
-  source: string
-}
+//  interface IUserTrackerRequest {
+//   visitorId: string
+//   source: string
+// }
 
-   useEffect(() => {
-    const key = 'visitorId';
-    let visitorId = localStorage.getItem(key);
+//    useEffect(() => {
+//     const key = 'visitorId';
+//     let visitorId = localStorage.getItem(key);
 
-    if (!visitorId) {
-      visitorId = crypto.randomUUID(); 
-      localStorage.setItem(key, visitorId);
-    }
+//     if (!visitorId) {
+//       visitorId = crypto.randomUUID(); 
+//       localStorage.setItem(key, visitorId);
+//     }
 
-    userTracker(visitorId, "localStorage");
+//     userTracker(visitorId, "localStorage");
 
-  }, []);
+//   }, []);
 
-  const userTracker = async (visitorId: string, source: string) => {
-    const formData: IUserTrackerRequest = { visitorId: visitorId, source: source };
-    const res = await InsertUserTracker(formData);
-  }
+//   const userTracker = async (visitorId: string, source: string) => {
+//     const formData: IUserTrackerRequest = { visitorId: visitorId, source: source };
+//     const res = await InsertUserTracker(formData);
+//   }
 
   return (
     <main className="min-h-screen bg-background">

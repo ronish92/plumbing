@@ -4,6 +4,22 @@ export type loginModel = {
   employeecode? : string
  
 };
+export type registerUserModel = {
+  username: string;
+  password: string;
+  phone : string;
+  email: string;
+ 
+};
+
+export type registerCompanyModel = {
+  name: string;
+  address: string;
+  phone : string;
+  email: string;
+  vatNo? : string;
+ 
+};
 
 export type ForgotPasswordModel = {
   email: string;

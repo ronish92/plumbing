@@ -83,7 +83,7 @@ function FeatureCard({ feature, index }: { feature: (typeof features)[0]; index:
     >
       {/* Animated border glow */}
       <motion.div
-        className="absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background: `linear-gradient(135deg, ${feature.accent}40, transparent, ${feature.accent}40)`,
           filter: "blur(8px)",

@@ -4,15 +4,21 @@
 export enum UserRole {
   
   Admin = "Admin",
-  Worker ="Worker"
+  Worker ="Worker",
+  SuperAdmin = "SuperAdmin"
 }
 
 export interface userResponseModel {
   name?: string;
-  email?: string;
-  roles?: UserRole[];  
   token?: string;
-  tenant?: string;
-  refreshToken?: string;
+  notBefore?: string;
   expiration?: string;
+  role?: UserRole;
+  userId?: number | null;
+  refreshToken?: string;
+  refreshTokenExpiration?: string;
+  expiresAt?: string;
+  companyId?: number;
+  companyName?: string | null;
+  companyRole?: string | null;
 }

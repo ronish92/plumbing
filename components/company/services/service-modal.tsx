@@ -16,11 +16,6 @@ import {
   Upload,
   ImageIcon,
   X,
-  User,
-  Clock,
-  ShieldCheck,
-  Users,
-  IndianRupee,
   Calendar,
 } from "lucide-react";
 
